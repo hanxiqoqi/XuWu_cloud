@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XuWu 网盘</title>
+    <link rel="icon" href="../img/Logo1.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 flex h-screen">
+    <!-- 美化后的左侧列表 -->
+    <div class="bg-white p-4 w-64 rounded-r-3xl shadow-lg overflow-y-auto">
+        <ul class="space-y-4 mt-8">
+            <li>
+                <a href="{{ url_for('index') }}" class="flex items-center px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+                    <i class="fa-solid fa-user-lock mr-3 text-blue-500"></i>
+                    <span class="text-gray-700 font-medium">个人网盘</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('public_cloud') }}" class="flex items-center px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+                    <i class="fa-solid fa-globe mr-3 text-blue-500"></i>
+                    <span class="text-gray-700 font-medium">公共网盘</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="container mx-auto p-8 flex-grow">
+        <h1 class="text-3xl font-bold mb-4">欢迎来到个人网盘</h1>
+        <div class="mb-4">
+            <p>已使用空间: {{ used_space | format_size }} / {{ total_space | format_size }}</p>
+            <div class="bg-gray-200 rounded-full h-2.5 mb-4">
+                <div class="bg-blue-600 h-2.5 rounded-full" style="width: {{ (used_space / total_space) * 100 }}%"></div>
+            </div>
+        </div>
+        <form action="/upload" method="post" enctype="multipart/form-data" class="mb-4">
+            <input type="file" name="file" class="mb-2">
+            <button type="submit" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">上传文件</button>
+        </form>
+        <h2 class="text-2xl font-bold mb-2">文件列表</h2>
+        <ul>
+            {% for file in files %}
+            <li class="mb-2 flex items-center justify-between">
+                <a href="{{ url_for('uploaded_file', username=session['username'], filename=file) }}" class="text-blue-500 hover:underline">
+                    {{ file }}
+                </a>
+                <form action="{{ url_for('delete_file', filename=file) }}" method="post" onsubmit="return confirm('确定要删除这个文件吗？');">
+                    <button type="submit" class="bg-red-500 text-white p-1 rounded hover:bg-red-600">删除</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+        <a href="{{ url_for('logout') }}" class="mt-4 inline-block bg-red-500 text-white p-2 rounded hover:bg-red-600">退出登录</a>
+    </div>
+</body>
+
+</html>
+    

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XuWu 网盘</title>
+    <link rel="icon" href="../img/Logo1.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <div class="container mx-auto p-8 flex justify-center items-center h-screen">
+        <form action="/login" method="post" class="bg-white p-6 rounded shadow">
+            <h2 class="text-2xl font-bold mb-4">登录</h2>
+            <input type="text" name="username" placeholder="用户名"
+                class="border border-gray-300 p-2 rounded w-full mb-2">
+            <input type="password" name="password" placeholder="密码"
+                class="border border-gray-300 p-2 rounded w-full mb-4">
+            <button type="submit" class="bg-blue-500 text-white p-2 rounded w-full hover:bg-blue-600">登录</button>
+            <p class="mt-2 text-center">还没有账号？<a href="{{ url_for('register') }}" class="text-blue-500 hover:underline">注册</a></p>
+        </form>
+    </div>
+</body>
+
+</html>
